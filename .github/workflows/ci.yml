@@ -1,0 +1,58 @@
+# Powered by NyphexAI, Developed by Hikaru(i@rua.moe)
+# Licensed under the PolyForm Noncommercial License 1.0.0
+
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build & Test (macOS arm64)
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode & inspect toolchain
+        run: |
+          if [ -d /Applications/Xcode.app/Contents/Developer ]; then
+            sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+          fi
+          uname -m
+          sw_vers
+          xcodebuild -version
+          swift --version
+
+      - name: Lint shell scripts
+        run: bash -n install.sh scripts/*.sh
+
+      - name: Run Swift unit tests
+        run: swift test
+
+      - name: Build & package SpoofMacintosh
+        run: ./scripts/package-release.sh
+
+      - name: Verify signatures, CLI smoke tests & checksums
+        run: |
+          codesign --verify --verbose=2 dist/SpoofMac.kext
+          codesign --verify --deep --strict --verbose=2 dist/SpoofMacintosh.app
+          ./dist/spoofmac --version
+          ./dist/spoofmac list-models >/dev/null
+          ./dist/spoofmac list-regions >/dev/null
+          (cd release && shasum -a 256 -c SHA256SUMS.txt)
+
+      - name: Upload CI build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: SpoofMacintosh-CI-arm64
+          path: |
+            release/*.dmg
+            release/*.zip
+            release/SHA256SUMS.txt
+          retention-days: 14

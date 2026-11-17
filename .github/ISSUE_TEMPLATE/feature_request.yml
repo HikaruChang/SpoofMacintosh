@@ -1,0 +1,32 @@
+name: Feature Request / 功能建議或機型預設請求
+description: 請求新增 Mac 機型預設、銷售地區代碼或功能改進
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        歡迎建議新的 Apple Silicon Mac 機型預設、銷售地區或功能強化！
+  - type: dropdown
+    id: category
+    attributes:
+      label: Request Category / 建議類型
+      options:
+        - 新增 Mac 機型預設 (New Mac Model Preset)
+        - 新增銷售地區代碼 (New Region Code)
+        - GUI / CLI 功能強化 (Feature Enhancement)
+        - 多語言翻譯修正 (Localization Fix)
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details / 詳細說明
+      description: |
+        若申請新增原廠機型預設，建議附上公開規格資訊：
+        - `model` (如 `Mac17,6`)
+        - `model-number` 前綴 (如 `MX303`)
+        - `regulatory-model-number` (如 `A3429`)
+        - `target-type` / `target-sub-type` / `platform-name` (如有)
+    validations:
+      required: true

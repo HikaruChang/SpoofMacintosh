@@ -1,0 +1,21 @@
+# SwiftPM / Xcode
+.build/
+.swiftpm/
+DerivedData/
+*.xcodeproj/
+xcuserdata/
+
+# Build & Release Artifacts
+dist/
+release/
+SpoofMac.kext/
+*.o
+*.dSYM/
+*.dmg
+*.zip
+
+# macOS & Local IDE
+.DS_Store
+._*
+.vscode/
+.idea/

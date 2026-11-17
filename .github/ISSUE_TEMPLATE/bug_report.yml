@@ -1,0 +1,48 @@
+name: Bug Report / 問題回報
+description: 回報 SpoofMacintosh 的錯誤、UI 顯示問題或相容性異常
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感謝回報問題！請提供盡可能完整的環境資訊與診斷輸出（`spoofmac diagnose` 預設已自動遮罩序號、UUID 與 MLB）。
+  - type: input
+    id: macos_version
+    attributes:
+      label: macOS Version / macOS 版本
+      description: 例如 macOS 15.3 (24D60) 或 macOS 26.2
+      placeholder: "macOS ..."
+    validations:
+      required: true
+  - type: input
+    id: mac_model
+    attributes:
+      label: Native Mac Model & Chip / 原廠機型與晶片
+      description: 例如 MacBook Pro 16" M4 Max (Mac16,5)
+      placeholder: "MacBook ... (M1–M6)"
+    validations:
+      required: true
+  - type: input
+    id: spoofmac_version
+    attributes:
+      label: SpoofMacintosh Version / 工具版本
+      description: 執行 `spoofmac --version` 或從「關於 SpoofMacintosh」取得
+      placeholder: "v1.0.0"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Steps to Reproduce & Expected vs Actual Behavior / 重現步驟與預期結果
+      description: 請說明您的操作步驟、預期結果與實際發生的現象
+    validations:
+      required: true
+  - type: textarea
+    id: diagnose
+    attributes:
+      label: Diagnostic Output (`spoofmac diagnose`) / 診斷報告（請勿附加未遮罩的個人序號）
+      description: 請貼上 `spoofmac diagnose` 或 GUI「系統概覽」複製的純文字報告
+      render: text
+    validations:
+      required: true
